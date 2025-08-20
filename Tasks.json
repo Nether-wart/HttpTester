@@ -1,0 +1,19 @@
+{
+  "tasks": [
+    {
+      "name": "task1",
+      "url": "https://lf-flow-web-cdn.doubao.com/obj/flow-doubao/doubao_pc/1.67.4/1020/Doubao_installer.exe",
+      "method": "GET",
+      "body": null,
+      "interval": 1000,
+      "threads": 10,
+      "times": 20,
+      "headers": [
+        {
+          "key": "header1",
+          "value": "value"
+        }
+      ]
+    }
+  ]
+}
