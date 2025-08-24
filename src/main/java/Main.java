@@ -7,7 +7,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws Throwable{
@@ -22,13 +21,13 @@ public class Main {
             HttpRequest request;
             if (task.body!=null){
                 request=HttpRequest.newBuilder()
-                        .method(task.getMethod(), HttpRequest.BodyPublishers.ofString(task.getBody()))
-                        .uri(URI.create(task.getUrl()))
+                        .method(task.method, HttpRequest.BodyPublishers.ofString(task.body))
+                        .uri(URI.create(task.url))
                         .build();
             }else {
                 request=HttpRequest.newBuilder()
-                        .method(task.getMethod(), HttpRequest.BodyPublishers.noBody())
-                        .uri(URI.create(task.getUrl()))
+                        .method(task.method, HttpRequest.BodyPublishers.noBody())
+                        .uri(URI.create(task.url))
                         .build();
             }
             HttpResponse<InputStream> response=client.send(request, HttpResponse.BodyHandlers.ofInputStream());
