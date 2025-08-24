@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -51,8 +52,13 @@ public class Task {
 
     public HttpRequest getRequest(){
         var builder= HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .method(method, HttpRequest.BodyPublishers.noBody());
+                .uri(URI.create(url));
+
+        if (body!=null){
+            builder.method(method, HttpRequest.BodyPublishers.ofString(body, StandardCharsets.UTF_8));
+        }else {
+            builder.method(method, HttpRequest.BodyPublishers.noBody());
+        }
 
         for (Map.Entry<String,String> entry:headers.entrySet()){
             builder.header(entry.getKey(),entry.getValue());
