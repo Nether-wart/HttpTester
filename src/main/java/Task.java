@@ -1,6 +1,7 @@
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
+import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Task {
@@ -11,7 +12,9 @@ public class Task {
     long interval;
     int threads;
     long times;
-    List<Header> headers;
+    Map<String,String> headers;
+
+
 
     public String getName() {
         return name;
@@ -70,11 +73,11 @@ public class Task {
         this.times = times;
     }
 
-    public List<Header> getHeaders() {
+    public Map<String, String> getHeaders() {
         return headers;
     }
 
-    public void setHeaders(List<Header> headers) {
+    public void setHeaders(Map<String,String> headers) {
         this.headers = headers;
     }
 }

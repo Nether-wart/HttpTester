@@ -8,12 +8,10 @@
       "interval": 1000,
       "threads": 10,
       "times": 20,
-      "headers": [
-        {
-          "key": "header1",
-          "value": "value"
-        }
-      ]
+      "headers": {
+        "key1": "value1",
+        "key2": "value2"
+      }
     }
   ]
 }
