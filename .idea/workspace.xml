@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8b479558-0b93-4aec-b363-9adeb8886b05" name="更改" comment="初始化仓库">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tasks.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Config.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Header.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Task.java" afterDir="false" />
+    <list default="true" id="8b479558-0b93-4aec-b363-9adeb8886b05" name="更改" comment="重命名仓库">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
@@ -31,9 +24,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="31XPVwmkUHYpT7wVLQu4XGkOfu4" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -44,9 +40,14 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
-    "settings.editor.selected.configurable": "preferences.language.and.region",
+    "last_opened_file_path": "U:/Projects/Java/HttpTester",
+    "project.structure.last.edited": "项目",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "应用程序.Main.executor": "Run",
     "应用程序.Test.executor": "Debug"
   }
@@ -72,22 +73,38 @@
       <option name="project" value="LOCAL" />
       <updated>1755667701978</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="初始化仓库">
+      <option name="closed" value="true" />
+      <created>1755670839722</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1755670839722</updated>
+    </task>
+    <task id="LOCAL-00003" summary="添加解析配置文件需要的类">
+      <option name="closed" value="true" />
+      <created>1755670958794</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1755670958794</updated>
+    </task>
+    <task id="LOCAL-00004" summary="添加主方法，实现发送请求并流式读取响应">
+      <option name="closed" value="true" />
+      <created>1755671029454</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1755671029454</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="初始化仓库" />
-    <option name="LAST_COMMIT_MESSAGE" value="初始化仓库" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/Test.java</url>
-          <line>8</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="添加解析配置文件需要的类" />
+    <MESSAGE value="添加主方法，实现发送请求并流式读取响应" />
+    <MESSAGE value="重命名仓库" />
+    <option name="LAST_COMMIT_MESSAGE" value="重命名仓库" />
   </component>
 </project>
