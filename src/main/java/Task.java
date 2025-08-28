@@ -1,3 +1,5 @@
+import analyzer.*;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.InputStream;
@@ -21,6 +23,8 @@ public class Task {
     long times;
     Map<String,String> headers;
 
+    transient final HttpStatusCounter counter=new HttpStatusCounter();
+    transient final DelayAnalyzer delayAnalyzer=new DelayAnalyzer();
 
     public List<Runnable> getRunnableList(){
         List<Runnable> runnableList=new ArrayList<>();
@@ -32,20 +36,29 @@ public class Task {
 
     private Runnable newRunnable(){
         return () -> {
+            analyzer.Timer timer=new Timer();
+
             try(HttpClient client= HttpClient.newBuilder()
                     .followRedirects(HttpClient.Redirect.NORMAL)
                     .build()){
                 for (int i=0;i<times;i++){
+                    timer.start();
                     HttpResponse<InputStream> response=client.send(getRequest(),
                             HttpResponse.BodyHandlers.ofInputStream());
+
+                    delayAnalyzer.increment(timer.stopAndGet());
+                    counter.increment(response.statusCode());
+
                     var in=response.body();
                     try (in){
-                        byte[] b=new byte[1024];
-                        while (in.read(b)!=-1){}
+                        byte[] b=new byte[10240];
+                        while (in.read(b)!=-1){
+
+                        }
                     }
                 }
             } catch (Exception e){
-                e.printStackTrace();
+                counter.increment(-1);
             }
         };
     }

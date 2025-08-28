@@ -1,11 +1,10 @@
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Config {
     List<Task> tasks;
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
