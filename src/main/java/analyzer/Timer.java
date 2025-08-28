@@ -7,6 +7,16 @@ public class Timer {
         startTime=System.currentTimeMillis();
     }
 
+    public long getAndReStart(){
+        long time=get();
+        start();
+        return time;
+    }
+
+    public long get(){
+        return System.currentTimeMillis()-startTime;
+    }
+
     public long stopAndGet(){
         if (startTime==0){
             throw new RuntimeException("Not started");
