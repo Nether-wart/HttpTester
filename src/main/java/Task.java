@@ -34,6 +34,8 @@ public class Task {
         for (int threads=0;threads<this.threads;threads++){
             runnableList.add(newRunnable());
         }
+        Show show=new Show(counter,delayAnalyzer,speedAnalyzer,threads);
+        show.start();
         return runnableList;
     }
 
@@ -68,6 +70,7 @@ public class Task {
                     }
                 }
             }
+            //show.cancel();
         };
     }
 
