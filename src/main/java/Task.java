@@ -4,8 +4,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import utils.CustomDns;
 
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +18,7 @@ import java.util.Map;
 public class Task {
     String name;
     String url;
+    String forceIP;
     String method;
     String body;
     long interval;
@@ -40,7 +44,16 @@ public class Task {
         return () -> {
             analyzer.Timer timer=new Timer();
 
-            OkHttpClient client=new OkHttpClient();
+            CustomDns dns=new CustomDns();
+            if (forceIP!=null){
+                dns.addMapping(URI.create(url).getHost(),forceIP);
+            }
+
+            OkHttpClient client=new OkHttpClient().newBuilder()
+                    .dns(dns)
+                    .followRedirects(true)
+                    .connectTimeout(Duration.ofSeconds(5))
+                    .build();
             for (int i=0;i<times;i++) {
                 timer.start();
                 try (Response response = client.newCall(getRequest()).execute()) {
@@ -88,6 +101,10 @@ public class Task {
     //setters
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setForceIP(String forceIP) {
+        this.forceIP = forceIP;
     }
 
     public void setUrl(String url) {
