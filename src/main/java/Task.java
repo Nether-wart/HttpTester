@@ -1,13 +1,10 @@
 import analyzer.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,49 +40,41 @@ public class Task {
         return () -> {
             analyzer.Timer timer=new Timer();
 
-            try(HttpClient client= HttpClient.newBuilder()
-                    .followRedirects(HttpClient.Redirect.NORMAL)
-                    .build()){
-                for (int i=0;i<times;i++){
-                    try {
-                        timer.start();
-                        HttpResponse<InputStream> response=client.send(getRequest(),
-                                HttpResponse.BodyHandlers.ofInputStream());
+            OkHttpClient client=new OkHttpClient();
+            for (int i=0;i<times;i++) {
+                timer.start();
+                try (Response response = client.newCall(getRequest()).execute()) {
+                    delayAnalyzer.increment(timer.stopAndGet());
+                    counter.increment(response.code());
 
-                        delayAnalyzer.increment(timer.stopAndGet());
-                        counter.increment(response.statusCode());
-
-                        timer.start();
-                        var in=response.body();
-                        try (in){
-                            byte[] b=new byte[10240];
-                            int bytesRead;
-                            while ((bytesRead=in.read(b))!=-1){
-                                speedAnalyzer.increment(bytesRead,timer.getAndReStart());
-                            }
+                    var in=response.body().byteStream();
+                    try (in){
+                        byte[] b=new byte[10240];
+                        int bytesRead;
+                        while ((bytesRead=in.read(b))!=-1){
+                            speedAnalyzer.increment(bytesRead,timer.getAndReStart());
                         }
-
-                    } catch (IOException | InterruptedException e) {
-                        counter.increment(-1);
                     }
+
+                }catch (Exception e){
+                    counter.increment(-1);
                 }
             }
+
             //show.cancel();
         };
     }
 
-    public HttpRequest getRequest(){
-        var builder= HttpRequest.newBuilder()
-                .uri(URI.create(url));
+    public Request getRequest(){
+        var builder=new Request.Builder()
+                .url(url);
 
         if (body!=null){
-            builder.method(method, HttpRequest.BodyPublishers.ofString(body, StandardCharsets.UTF_8));
-        }else {
-            builder.method(method, HttpRequest.BodyPublishers.noBody());
+            builder.method(method, RequestBody.create(body.getBytes(StandardCharsets.UTF_8)));
         }
 
         for (Map.Entry<String,String> entry:headers.entrySet()){
-            builder.header(entry.getKey(),entry.getValue());
+            builder.addHeader(entry.getKey(),entry.getValue());
         }
 
         return builder.build();
