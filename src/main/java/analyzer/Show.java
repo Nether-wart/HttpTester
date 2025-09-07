@@ -60,6 +60,6 @@ public class Show {
     }
 
     private void showSpeed(){
-        System.out.printf("下载速度:%.2f MB/S\n",threads*speedAnalyzer.getAvg()*1000D/1024/1024);
+        System.out.printf("下载速度:%.2f MB/S\n",threads*speedAnalyzer.getAvg()/1024);
     }
 }

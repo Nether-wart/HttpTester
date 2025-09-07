@@ -11,7 +11,7 @@ public class SpeedAnalyzer {
         totalTime.add(time);
     }
 
-    public long getAvg(){
-        return totalBytes.longValue()/totalTime.longValue();
+    public double getAvg(){
+        return (double) totalBytes.longValue()/totalTime.longValue();
     }
 }
