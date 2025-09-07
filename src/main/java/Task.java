@@ -62,10 +62,14 @@ public class Task {
 
                     var in=response.body().byteStream();
                     try (in){
-                        byte[] b=new byte[10240];
                         int bytesRead;
-                        while ((bytesRead=in.read(b))!=-1){
-                            speedAnalyzer.increment(bytesRead,timer.getAndReStart());
+                        timer.start();
+                        while (true){
+                            timer.start();
+                            bytesRead=in.readNBytes(102400).length;
+                            if (bytesRead==0)break;
+                            long time=timer.stopAndGet();
+                            speedAnalyzer.increment(bytesRead,time);
                         }
                     }
 
