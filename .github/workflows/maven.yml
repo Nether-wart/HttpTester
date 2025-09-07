@@ -1,0 +1,47 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "master" ]
+    # 你也可以选择仅在推送 tag 时触发，例如 tags: ['v*'] :cite[5]
+  # 允许手动触发该工作流 :cite[6]
+  workflow_dispatch:
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    # 为后续步骤设置足够的权限（尤其是上传 Release 时）
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21' # 或你项目所需的 JDK 版本，如 '8', '17'
+        distribution: 'temurin'
+        cache: 'maven'
+
+    - name: Build with Maven
+      run: mvn -B clean package
+
+    - name: Prepare staging directory
+      run: mkdir staging && cp target/*.jar staging
+
+    - name: Get Release version
+      id: get-version
+      run: echo "RELEASE_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: staging/*.jar
+        tag_name: v${{ env.RELEASE_VERSION }}
+        name: v${{ env.RELEASE_VERSION }}
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
