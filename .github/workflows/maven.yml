@@ -40,7 +40,7 @@ jobs:
       with:
         files: staging/*.jar
         tag_name: v${{ env.RELEASE_VERSION }}
-        name: Release v${{ env.LEASE_VERSION }}
+        name: v${{ env.RELEASE_VERSION }}
         draft: false
         prerelease: false
       env:
