@@ -5,10 +5,10 @@ import analyzer.HttpStatusCounter;
 import analyzer.SpeedAnalyzer;
 import config.Tasks;
 import impl.Manager;
-import okhttp3.Dns;
-import okhttp3.OkHttpClient;
 import impl.runnable.Context;
 import impl.runnable.RunnableTaskImpl;
+import okhttp3.Dns;
+import okhttp3.OkHttpClient;
 import utils.CustomDns;
 
 import java.net.URI;

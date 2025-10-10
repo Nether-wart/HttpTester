@@ -1,7 +1,7 @@
 package utils;
 
-import okhttp3.Headers;
 import okhttp3.Response;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class LogRecorder {
     private static final ReentrantLock lock = new ReentrantLock();
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
 
     // 默认日志文件路径
     private static final String DEFAULT_LOG_FILE = "http_requests.log";
@@ -32,23 +32,26 @@ public class LogRecorder {
              PrintWriter out = new PrintWriter(bw)) {
 
             String timestamp = DATE_FORMAT.format(new Date());
-            int statusCode = response.code();
-            Headers headers = response.headers();
+            var statusCode = response.code();
+            var headers = response.headers();
+            var body = response.body();
 
             // 构建日志内容
             StringBuilder logEntry = new StringBuilder();
-            logEntry.append("[").append(timestamp).append("]\n");
-            logEntry.append("URL: ").append(url).append("\n");
-            logEntry.append("Status Code: ").append(statusCode).append("\n");
-            logEntry.append("Response Headers:\n");
+            logEntry.append("{");
+            logEntry.append("\"Time\": ").append("\""+timestamp+"\"").append(",");
+            logEntry.append("\"URL\": ").append("\""+url+"\"").append(",");
+            logEntry.append("\"Status Code\": ").append(statusCode).append(",");
+            logEntry.append("\"Response Headers\":" +
+                    "[");
 
             // 添加所有响应头
             for (String headerName : headers.names()) {
-                logEntry.append("  ").append(headerName).append(": ")
-                        .append(headers.get(headerName)).append("\n");
+                logEntry.append(headerName).append(": ")
+                        .append("\""+headers.get(headerName)+"\"");
             }
 
-            logEntry.append("-----------------------------\n");
+            logEntry.append("}");
 
             // 写入文件
             out.println(logEntry);
@@ -63,7 +66,7 @@ public class LogRecorder {
 
     /**
      * 记录失败的请求
-     */
+
     public static void logError(String url, String errorMessage) {
         logError(url, errorMessage, DEFAULT_LOG_FILE);
     }
@@ -100,9 +103,9 @@ public class LogRecorder {
 
     public static void clearLog(String logFilePath) {
         lock.lock();
-        try (PrintWriter out = new PrintWriter(logFilePath)) {
+        try (FileWriter out = new FileWriter(logFilePath,false)) {
             // 清空文件内容
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             System.err.println("清空日志文件失败: " + e.getMessage());
         } finally {
             lock.unlock();

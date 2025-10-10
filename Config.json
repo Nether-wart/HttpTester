@@ -13,5 +13,6 @@
         "key2": "value2"
       }
     }
-  ]
+  ],
+  "logfilePath": "http_requests.log"
 }
