@@ -4,10 +4,14 @@ import java.util.concurrent.atomic.LongAdder;
 
 public class DelayAnalyzer {
     private final LongAdder total=new LongAdder();
-    private final LongAdder times=new LongAdder(1);
+    private final LongAdder times=new LongAdder();
 
     private long max=Integer.MIN_VALUE;
     private long min=Integer.MAX_VALUE;
+
+    public DelayAnalyzer(){
+        times.increment();
+    }
 
     public void increment(long delay){
         total.add(delay);
